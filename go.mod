@@ -1,4 +1,4 @@
-module github.com/chains-lab/gatekit
+module github.com/chains-lab/restkit
 
 go 1.24.5
 
