@@ -5,8 +5,8 @@ import (
 
 	"github.com/chains-lab/ape"
 	"github.com/chains-lab/ape/problems"
-	"github.com/chains-lab/restkit/auth"
 	"github.com/chains-lab/restkit/roles"
+	"github.com/chains-lab/restkit/token"
 )
 
 func RoleGrant(ctxKey interface{}, allowedRoles map[string]bool) func(http.Handler) http.Handler {
@@ -14,7 +14,7 @@ func RoleGrant(ctxKey interface{}, allowedRoles map[string]bool) func(http.Handl
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()
 
-			user, ok := ctx.Value(ctxKey).(auth.UserData)
+			user, ok := ctx.Value(ctxKey).(token.UserData)
 			if !ok {
 				ape.RenderErr(w,
 					problems.Unauthorized("Missing AuthorizationHeader header"),

@@ -7,16 +7,15 @@ import (
 
 	"github.com/chains-lab/ape"
 	"github.com/chains-lab/ape/problems"
-	"github.com/chains-lab/restkit/auth"
+	"github.com/chains-lab/restkit/token"
 	"github.com/google/uuid"
 )
 
 const (
-	AuthorizationHeader        = "Authorization"
-	ServiceAuthorizationHeader = "X-Service-Authorization" // отдельный заголовок для m2
-	IpHeader                   = "X-User-IP"
-	UserAgentHeader            = "X-User-Agent"
-	ClientTxHeader             = "X-Client-Tx"
+	AuthorizationHeader = "Authorization"
+	IpHeader            = "X-User-IP"
+	UserAgentHeader     = "X-User-Agent"
+	ClientTxHeader      = "X-Client-Tx"
 )
 
 func Auth(ctxKey interface{}, skUser string) func(http.Handler) http.Handler {
@@ -44,7 +43,7 @@ func Auth(ctxKey interface{}, skUser string) func(http.Handler) http.Handler {
 
 			tokenString := parts[1]
 
-			userData, err := auth.VerifyUserJWT(r.Context(), tokenString, skUser)
+			userData, err := token.VerifyUserJWT(tokenString, skUser)
 			if err != nil {
 				ape.RenderErr(w,
 					problems.Unauthorized("Token validation failed"),
@@ -62,7 +61,7 @@ func Auth(ctxKey interface{}, skUser string) func(http.Handler) http.Handler {
 				return
 			}
 
-			ctx = context.WithValue(ctx, ctxKey, auth.UserData{
+			ctx = context.WithValue(ctx, ctxKey, token.UserData{
 				ID:        userID,
 				SessionID: userData.SessionID,
 				Role:      userData.Role,
