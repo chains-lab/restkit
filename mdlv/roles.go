@@ -3,13 +3,13 @@ package mdlv
 import (
 	"net/http"
 
-	"github.com/umisto/ape"
-	"github.com/umisto/ape/problems"
-	"github.com/umisto/restkit/roles"
-	"github.com/umisto/restkit/token"
+	"github.com/netbill/ape"
+	"github.com/netbill/ape/problems"
+	"github.com/netbill/restkit/roles"
+	"github.com/netbill/restkit/token"
 )
 
-func (s Service) SystemRoleGrant(allowedRoles map[string]bool) func(http.Handler) http.Handler {
+func (s Service) RoleGrant(allowedRoles map[string]bool) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()

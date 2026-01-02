@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
-	"github.com/umisto/ape"
-	"github.com/umisto/ape/problems"
-	"github.com/umisto/restkit/token"
+	"github.com/netbill/ape"
+	"github.com/netbill/ape/problems"
+	"github.com/netbill/restkit/token"
 )
 
 const (
